@@ -15,22 +15,20 @@ pipeline {
         sh "sudo docker build . -t '$registry:${env.GIT_BRANCH}'"
       }
     }
-    stage('Testar imagem Docker') {
-      switch (env.BRANCH_NAME) {
-        case "development":
+    stage('Testar imagem Docker'){
+      steps{
+        if ({env.GIT_BRANCH} == "development") {
           sh "sudo docker container run -d --name webserver-development '$registry:${env.GIT_BRANCH}'"
           sh "sudo docker container rm -f webserver-development"
-        break
-        case "homolog":
+      } else if ({env.GIT_BRANCH} == "homolog"){
           sh "sudo docker container run -d --name webserver-homolog '$registry:${env.GIT_BRANCH}'"
           sh "sudo docker container rm -f webserver-homolog"
-        break
-        case "production":
+      } else {
           sh "sudo docker container run -d --name webserver-production '$registry:${env.GIT_BRANCH}'"
           sh "sudo docker container rm -f webserver-production"
-        break
-        }
-      } 
+      }
+    }
+  }
     stage('Enviar imagem ao Docker HUB') {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerHubUser')]) {
