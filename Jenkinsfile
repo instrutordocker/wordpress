@@ -21,19 +21,5 @@ pipeline {
           sh "sudo docker container rm -f 'webserver-${env.GIT_BRANCH}'"
     }
   }
-    stage('Enviar imagem ao Docker HUB') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerHubUser')]) {
-          sh "sudo docker login -u ${env.dockerhubUser} -p ${env.dockerhubPassword}"
-          sh "sudo docker tag '$registry:${env.GIT_BRANCH}' $registry:${env.GIT_BRANCH}"
-          sh "sudo docker push $registry:${env.GIT_BRANCH}"
-        }
-      }
-    }
-    stage('Remover imagem Docker não utilizada') {
-      steps{
-        sh "sudo docker rmi '$registry:${env.GIT_BRANCH}'"
-      }
-    }
   }
 }
