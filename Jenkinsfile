@@ -15,30 +15,26 @@ pipeline {
         sh "sudo docker build . -t '$registry:${env.GIT_BRANCH}'"
       }
     }
-    stage('Testar imagem Docker - Development') {
-      when {
-      expression { return env.BRANCH_NAME == 'development' }}
+    stage('Testar imagem Docker') {
+      if env.BRANCH_NAME == "development" {
       steps{
-        sh "sudo docker container run -d --name '$registry:development' '$registry:${env.GIT_BRANCH}'"
-        sh "sudo docker container rm -f '$registry:development'"
-      }
-    }
-    stage('Testar imagem Docker - Homolog') {
-      when {
-      expression { return env.BRANCH_NAME == 'homolog' }}
+        sh "sudo docker container run -d --name webserver-development '$registry:${env.GIT_BRANCH}'"
+        sh "sudo docker container rm -f webserver-development"
+      } 
+    } 
+      if env.BRANCH_NAME == "homolog" {
       steps{
-        sh "sudo docker container run -d --name '$registry:homolog' '$registry:${env.GIT_BRANCH}'"
-        sh "sudo docker container rm -f '$registry:homolog'"
-      }
-    }
-    stage('Testar imagem Docker - Production') {
-      when {
-      expression { return env.BRANCH_NAME == 'production' }}
+        sh "sudo docker container run -d --name webserver-homolog '$registry:${env.GIT_BRANCH}'"
+        sh "sudo docker container rm -f webserver-homolog"
+      } 
+    } 
+      if env.BRANCH_NAME == "production" {
       steps{
-        sh "sudo docker container run -d --name '$registry:production' '$registry:${env.GIT_BRANCH}'"
-        sh "sudo docker container rm -f '$registry:production'"
-      }
-    }
+        sh "sudo docker container run -d --name webserver-production '$registry:${env.GIT_BRANCH}'"
+        sh "sudo docker container rm -f webserver-production"
+      } 
+    } 
+  }
     stage('Enviar imagem ao Docker HUB') {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerHubUser')]) {
