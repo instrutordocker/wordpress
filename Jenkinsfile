@@ -17,8 +17,8 @@ pipeline {
     }
     stage('Testar imagem Docker') {
       steps{
-        sh "sudo docker container run -d --name '$registry:$BUILD_NUMBER' '$registry:$BUILD_NUMBER'"
-        sh "sudo docker container rm -f '$registry:$BUILD_NUMBER'
+        sh "sudo docker container run -d --name $registry:$BUILD_NUMBER '$registry:$BUILD_NUMBER'"
+        sh "sudo docker container rm -f $registry:$BUILD_NUMBER
       }
     }
     stage('Enviar imagem ao Docker HUB') {
