@@ -16,19 +16,19 @@ pipeline {
       }
     }
     stage('Testar imagem Docker') {
-      if env.BRANCH_NAME == "development" {
+      if ${env.GIT_BRANCH} == "development" {
       steps{
         sh "sudo docker container run -d --name webserver-development '$registry:${env.GIT_BRANCH}'"
         sh "sudo docker container rm -f webserver-development"
       } 
     } 
-      if env.BRANCH_NAME == "homolog" {
+      if ${env.GIT_BRANCH} == "homolog" {
       steps{
         sh "sudo docker container run -d --name webserver-homolog '$registry:${env.GIT_BRANCH}'"
         sh "sudo docker container rm -f webserver-homolog"
       } 
     } 
-      if env.BRANCH_NAME == "production" {
+      if ${GIT_BRANCH} == "production" {
       steps{
         sh "sudo docker container run -d --name webserver-production '$registry:${env.GIT_BRANCH}'"
         sh "sudo docker container rm -f webserver-production"
