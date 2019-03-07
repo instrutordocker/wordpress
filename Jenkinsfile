@@ -17,8 +17,8 @@ pipeline {
     }
     stage('Testar imagem Docker') {
       steps{
-        sh "sudo docker container run -d --name=wordpress -p 0.0.0.0:80:80 '$registry:$BUILD_NUMBER'"
-        sh "sudo docker container rm -f wordpress"
+        sh "sudo docker container run -d --name='webserver:${env.GIT_BRANCH}' '$registry:$BUILD_NUMBER'"
+        sh "sudo docker container rm -f 'webserver:${env.GIT_BRANCH}'
       }
     }
     stage('Enviar imagem ao Docker HUB') {
