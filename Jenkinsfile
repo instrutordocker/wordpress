@@ -17,8 +17,8 @@ pipeline {
     }
     stage('Testar imagem Docker') {
       steps{
-        sh "sudo docker container run -d --name='webserver:${env.GIT_BRANCH}' '$registry:$BUILD_NUMBER'"
-        sh "sudo docker container rm -f 'webserver:${env.GIT_BRANCH}'
+        sh "sudo docker container run -d --name='webserver:$BUILD_NUMBER' '$registry:$BUILD_NUMBER'"
+        sh "sudo docker container rm -f 'webserver:$BUILD_NUMBER'
       }
     }
     stage('Enviar imagem ao Docker HUB') {
