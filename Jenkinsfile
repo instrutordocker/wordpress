@@ -17,16 +17,8 @@ pipeline {
     }
     stage('Testar imagem Docker'){
       steps{
-        if ({env.GIT_BRANCH} == "development") {
-          sh "sudo docker container run -d --name webserver-development '$registry:${env.GIT_BRANCH}'"
-          sh "sudo docker container rm -f webserver-development"
-      } else if ({env.GIT_BRANCH} == "homolog"){
-          sh "sudo docker container run -d --name webserver-homolog '$registry:${env.GIT_BRANCH}'"
-          sh "sudo docker container rm -f webserver-homolog"
-      } else {
-          sh "sudo docker container run -d --name webserver-production '$registry:${env.GIT_BRANCH}'"
-          sh "sudo docker container rm -f webserver-production"
-      }
+          sh "sudo docker container run -d --name 'webserver-${env.GIT_BRANCH}' '$registry:${env.GIT_BRANCH}'"
+          sh "sudo docker container rm -f 'webserver-${env.GIT_BRANCH}'"
     }
   }
     stage('Enviar imagem ao Docker HUB') {
