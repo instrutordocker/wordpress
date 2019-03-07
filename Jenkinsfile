@@ -19,7 +19,7 @@ pipeline {
       switch (env.BRANCH_NAME) {
         case "development":
           sh "sudo docker container run -d --name webserver-development '$registry:${env.GIT_BRANCH}'"
-          sh "sudo docker container rm -f webserver-development" clean :app:assembleDebug")
+          sh "sudo docker container rm -f webserver-development"
         break
         case "homolog":
           sh "sudo docker container run -d --name webserver-homolog '$registry:${env.GIT_BRANCH}'"
