@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "instrutordocker/wordpress"
+    registry = "instrutordocker/wordpress-devops"
     registryCredential = 'dockerhub'
   }
   agent any
