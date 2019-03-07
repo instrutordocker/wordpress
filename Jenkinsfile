@@ -17,7 +17,7 @@ pipeline {
     }
     stage('Testar imagem Docker') {
       steps{
-        sh "sudo docker container run -d --name='webserver:$BUILD_NUMBER' '$registry:$BUILD_NUMBER'"
+        sh "sudo docker container run -d --name 'webserver:$BUILD_NUMBER' '$registry:$BUILD_NUMBER'"
         sh "sudo docker container rm -f 'webserver:$BUILD_NUMBER'
       }
     }
