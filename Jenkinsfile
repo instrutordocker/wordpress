@@ -17,19 +17,19 @@ pipeline {
     }
     stage('Testar imagem Docker') {
       when {
-      expression { return env.BRANCH_NAME == 'development'; }}
+      expression { return env.BRANCH_NAME == 'development' }}
       steps{
         sh "sudo docker container run -d --name '$registry:development' '$registry:${env.GIT_BRANCH}'"
         sh "sudo docker container rm -f '$registry:development'"
       }
       when {
-      expression { return env.BRANCH_NAME == 'homolog'; }}
+      expression { return env.BRANCH_NAME == 'homolog' }}
       steps{
         sh "sudo docker container run -d --name '$registry:homolog' '$registry:${env.GIT_BRANCH}'"
         sh "sudo docker container rm -f '$registry:homolog'"
       }
       when {
-      expression { return env.BRANCH_NAME == 'production'; }}
+      expression { return env.BRANCH_NAME == 'production' }}
       steps{
         sh "sudo docker container run -d --name '$registry:production' '$registry:${env.GIT_BRANCH}'"
         sh "sudo docker container rm -f '$registry:production'"
