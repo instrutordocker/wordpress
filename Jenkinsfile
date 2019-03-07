@@ -32,7 +32,7 @@ pipeline {
     }
     stage('Remover imagem Docker temporária') {
       steps{
-        sh "sudo docker rmi '$registry-${env.GIT_BRANCH}-temp'"
+        sh "sudo docker rmi -f '$registry:${env.GIT_BRANCH}-temp'"
       }
     }
   }
